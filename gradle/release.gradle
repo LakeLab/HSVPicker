@@ -1,0 +1,106 @@
+group = rootProject.ext.groupName
+version = rootProject.ext.libVersionName
+
+def siteUrl = 'https://github.com/LakeLab/HSVPicker'
+def gitUrl = 'https://github.com/LakeLab/HSVPicker.git'
+def issueTrackerSiteUrl = 'https://github.com/LakeLab/HSVPicker/issues'
+def githubRepoName = 'LakeLab/HSVPicker'
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name rootProject.ext.libraryName
+            description rootProject.ext.libraryDescription
+            url siteUrl
+
+            packaging 'aar'
+            groupId rootProject.ext.groupName
+            artifactId rootProject.ext.libraryName
+            version rootProject.ext.libVersionName
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+            }
+
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
+
+            developers {
+                developer {
+                    id 'LakeLab'
+                    name 'Kim Lake'
+                    email 'todaypoc@gmail.com'
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    archiveClassifier.set("sources")
+}
+
+afterEvaluate {
+    javadoc.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
+}
+
+task javadoc(type: Javadoc) {
+    excludes = ['**/*.kt']
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    archiveClassifier.set("javadoc")
+    from javadoc.destinationDir
+
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+if (project.rootProject.file('local.properties').isFile()) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    bintray {
+        user = properties.getProperty("bintray.user", '')
+        key = properties.getProperty("bintray.apikey", '')
+        configurations = ['archives']
+        publish = true
+
+        pkg {
+            repo = 'android'
+            name = rootProject.ext.libraryName
+            desc = rootProject.ext.libraryDescription
+            licenses = ['Apache-2.0']
+
+            vcsUrl = gitUrl
+            websiteUrl = siteUrl
+            issueTrackerUrl = issueTrackerSiteUrl
+
+            labels = ['android', 'colorpicker', 'library', 'hsv', 'color']
+            publicDownloadNumbers = false
+
+            githubRepo = githubRepoName
+
+            version {
+                name = rootProject.ext.libVersionName // The name of your library project
+                desc = rootProject.ext.libraryDescription
+                released = new Date()
+                vcsTag = rootProject.ext.libVersionName
+                gpg {
+                    sign = false
+                }
+            }
+        }
+    }
+}

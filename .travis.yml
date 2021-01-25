@@ -1,0 +1,36 @@
+language: android
+dist: trusty
+android:
+  components:
+    - build-tools-29.0.3
+    - android-15
+    - android-22
+    - android-29
+    - tools
+    - platform-tools
+    - add-on
+    - extra
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
+
+licenses:
+  - 'android-sdk-preview-license-.+'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+
+before_install:
+  - chmod +x gradlew
+
+script:
+  - ./gradlew clean --stacktrace
+  - ./gradlew assemble --stacktrace
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+    - $HOME/.android/build-cache

@@ -1,0 +1,2 @@
+include ':HSVPicker'
+include ':app'
