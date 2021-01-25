@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:orientation="vertical"
+    >
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/sample_panel"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_margin="15dp"
+        android:layout_weight="1"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="0dp"
+        />
+
+    <com.lakelab.hsvpicker.AlphaSlider
+        android:id="@+id/alpha_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        />
+
+    <com.lakelab.hsvpicker.HueSlider
+        android:id="@+id/hue_slider"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        />
+
+    <com.lakelab.hsvpicker.SatValPanel
+        android:id="@+id/sat_val_panel"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:padding="10dp"
+        />
+
+</LinearLayout>
