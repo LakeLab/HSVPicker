@@ -11,6 +11,10 @@
         <attr name="thumbRadius" />
         <attr name="thumbStrokeWidth" />
         <attr name="sliderWidth" format="dimension" />
+        <attr name="sliderOrientation" format="enum">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
     </declare-styleable>
 
     <declare-styleable name="SliderPanel">

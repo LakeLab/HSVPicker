@@ -70,7 +70,13 @@ class HueSlider @JvmOverloads constructor(
     override fun onPanelSizeChanged(panelPaint: Paint, panel: RectF) {
         super.onPanelSizeChanged(panelPaint, panel)
         panelPaint.shader = LinearGradient(
-            panel.left, 0f, panel.right, 0f, hueColors, null, TileMode.REPEAT
+            if (isVertical) 0f else panel.left,
+            if (isVertical) panel.bottom else 0f,
+            if (isVertical) 0f else panel.right,
+            if (isVertical) panel.top else 0f,
+            hueColors,
+            null,
+            TileMode.REPEAT
         )
     }
 }

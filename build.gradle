@@ -2,7 +2,7 @@
 buildscript {
     ext {
         groupName = 'com.lakelab'
-        libVersionName = '0.1.5'
+        libVersionName = '0.1.6'
         libraryName = 'HSVPicker'
         libraryDescription = 'The highly customizable HSV picker library'
     }

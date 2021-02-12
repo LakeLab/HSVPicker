@@ -1,6 +1,6 @@
 # HSVPicker
 
- [ ![Download](https://api.bintray.com/packages/lakelab/android/HSVPicker/images/download.svg?version=0.1.5) ](https://bintray.com/lakelab/android/HSVPicker/0.1.5/link) [![Build Status](https://travis-ci.com/LakeLab/HSVPicker.svg?branch=master)](https://travis-ci.com/LakeLab/HSVPicker)
+ [ ![Download](https://api.bintray.com/packages/lakelab/android/HSVPicker/images/download.svg?version=0.1.6) ](https://bintray.com/lakelab/android/HSVPicker/0.1.6/link) [![Build Status](https://travis-ci.com/LakeLab/HSVPicker.svg?branch=master)](https://travis-ci.com/LakeLab/HSVPicker)
 
 HSVPicker is an easy and highly customizable HSV picker library for Android.
 
@@ -8,7 +8,8 @@ HSVPicker is an easy and highly customizable HSV picker library for Android.
 - Resizable slider and panel.
 - There are NO dependencies with any android framework's view (100% Custom view)
 
-![Sample-1](static/sample1.gif)
+<img src="static/sample1.gif" width="300" height="517">
+<img src="static/sample2.gif" width="300" height="517">
 
 ## Download
 
@@ -19,7 +20,7 @@ repositories {
 }
 
 dependencies {
-   implementation 'com.lakelab:HSVPicker:0.1.5'
+   implementation 'com.lakelab:HSVPicker:0.1.6'
 }
 ```
 
@@ -29,7 +30,7 @@ Or Maven:
 <dependency>
   <groupId>com.lakelab</groupId>
   <artifactId>HSVPicker</artifactId>
-  <version>0.1.5</version>
+  <version>0.1.6</version>
   <type>pom</type>
 </dependency>
 ```
@@ -106,6 +107,7 @@ app:thumbStrokeWidth="3dp"
 
 <!-- Slider attribute -->
 app:sliderWidth="30dp"
+app:sliderOrientation = "horizontal"
 
 ```
 
@@ -117,6 +119,7 @@ slider.thumbColor = Color.parseColor("#ffffff")
 slider.thumbStrokeColor = Color.parseColor("#ffffff")
 slider.thumbStrokeWidth = 13f
 slider.sliderWidth = 30f
+slider.sliderOrientation = "horizontal"
 ```
 
 #### Attributes
@@ -132,9 +135,10 @@ slider.sliderWidth = 30f
 
 ##### Slider attributes
   
-| Attribute Name | Description     | Default Value |
-| :------------: | --------------- | :-----------: |
-|  sliderWidth   | Width of slider |     30dp      |
+|  Attribute Name   | Description           | Default Value |
+| :---------------: | --------------------- | :-----------: |
+|    sliderWidth    | Width of slider       |     30dp      |
+| sliderOrientation | Orientation of slider |  horizontal   |
 
 ### Sample Usage
 

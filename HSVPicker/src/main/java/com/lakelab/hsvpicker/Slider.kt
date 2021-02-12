@@ -57,34 +57,47 @@ open class Slider @JvmOverloads constructor(
         }
 
 
-    var thumbRadius = obtainStyledAttributes
-        ?.takeIf { it.hasValue(R.styleable.Slider_thumbRadius) }
-        ?.getDimension(R.styleable.Slider_thumbRadius, DEFAULT_THUMB_RADIUS_DP * density)
-        ?: DEFAULT_THUMB_RADIUS_DP * density
+    var thumbRadius =
+        obtainStyledAttributes?.getDimension(
+            R.styleable.Slider_thumbRadius, DEFAULT_THUMB_RADIUS_DP * density
+        ) ?: DEFAULT_THUMB_RADIUS_DP * density
         set(value) {
             field = value
             invalidate()
         }
 
-    var thumbStrokeWidth = obtainStyledAttributes
-        ?.takeIf { it.hasValue(R.styleable.Slider_thumbStrokeWidth) }
-        ?.getDimension(R.styleable.Slider_thumbStrokeWidth, DEFAULT_THUMB_STROKE_WIDTH_DP * density)
-        ?: DEFAULT_THUMB_STROKE_WIDTH_DP * density
+    var thumbStrokeWidth =
+        obtainStyledAttributes?.getDimension(
+            R.styleable.Slider_thumbStrokeWidth, DEFAULT_THUMB_STROKE_WIDTH_DP * density
+        ) ?: DEFAULT_THUMB_STROKE_WIDTH_DP * density
         set(value) {
             field = value
             invalidate()
         }
 
     var sliderWidth =
-        obtainStyledAttributes?.takeIf { it.hasValue(R.styleable.Slider_sliderWidth) }
-            ?.getDimension(R.styleable.Slider_sliderWidth, DEFAULT_SLIDER_WIDTH_DP * density)
-            ?: DEFAULT_SLIDER_WIDTH_DP * density
+        obtainStyledAttributes?.getDimension(
+            R.styleable.Slider_sliderWidth, DEFAULT_SLIDER_WIDTH_DP * density
+        ) ?: DEFAULT_SLIDER_WIDTH_DP * density
         set(value) {
             field = value
             requestLayout()
         }
 
-    private var yThumbPosition = 0f
+    @Orientation
+    var sliderOrientation =
+        obtainStyledAttributes?.getInt(R.styleable.Slider_sliderOrientation, Orientation.HORIZONTAL)
+            ?: Orientation.HORIZONTAL
+        set(value) {
+            isVertical = value == Orientation.VERTICAL
+            field = value
+            requestLayout()
+        }
+
+    var isVertical = sliderOrientation == Orientation.VERTICAL
+        private set
+
+    private var halfPositionOfThumb = 0f
 
     private val panelPaint = Paint()
     private val thumbPaint = Paint().apply {
@@ -109,7 +122,12 @@ open class Slider @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         canvas.drawRoundRect(panel, circleCornerRadius, circleCornerRadius, panelPaint)
-        val xThumbPosition = value * panel.width() + panel.left
+        val xThumbPosition =
+            if (isVertical) halfPositionOfThumb
+            else value * panel.width() + panel.left
+        val yThumbPosition =
+            if (isVertical) (1 - value) * panel.height() + panel.top
+            else halfPositionOfThumb
         if (thumbStrokeWidth > 0) {
             canvas.drawCircle(
                 xThumbPosition, yThumbPosition, thumbRadius + thumbStrokeWidth / 2, thumbStrokePaint
@@ -119,16 +137,6 @@ open class Slider @JvmOverloads constructor(
         if (thumbRadius > 0) {
             canvas.drawCircle(xThumbPosition, yThumbPosition, thumbRadius + fillMargin, thumbPaint)
         }
-    }
-
-
-    private fun getValue(x: Float): Float {
-        val xInBound = when {
-            x < panel.left -> 0f
-            x > panel.right -> panel.width()
-            else -> x - panel.left
-        }
-        return xInBound / panel.width()
     }
 
     private var startTouchPoint = Point()
@@ -160,9 +168,18 @@ open class Slider @JvmOverloads constructor(
 
     private fun processForThumbMove(event: MotionEvent): Boolean {
         var update = false
-        val startX = startTouchPoint.x
-        if (panelWithPadding.contains(startX.toFloat(), startTouchPoint.y.toFloat())) {
-            value = getValue(event.x)
+        if (panelWithPadding.contains(startTouchPoint.x.toFloat(), startTouchPoint.y.toFloat())) {
+            val point = if (isVertical) event.y else event.x
+            val pointInbound = when {
+                point < if (isVertical) panel.top else panel.left ->
+                    0f
+                point > if (isVertical) panel.bottom else panel.right ->
+                    if (isVertical) panel.height() else panel.width()
+                else ->
+                    point - if (isVertical) panel.top else panel.left
+            }
+            value =
+                if (isVertical) 1 - pointInbound / panel.height() else pointInbound / panel.width()
             update = true
         }
         return update
@@ -170,12 +187,15 @@ open class Slider @JvmOverloads constructor(
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec)
-        setMeasuredDimension(
-            MeasureSpec.getSize(widthMeasureSpec),
-            sliderWidth.coerceAtLeast((thumbRadius + thumbStrokeWidth) * 2)
-                .plus(paddingBottom)
-                .plus(paddingTop).toInt()
-        )
+        val greaterValue = sliderWidth.coerceAtLeast((thumbRadius + thumbStrokeWidth) * 2)
+            .plus(paddingBottom)
+            .plus(paddingTop).toInt()
+
+        if (isVertical) {
+            setMeasuredDimension(greaterValue, MeasureSpec.getSize(heightMeasureSpec))
+        } else {
+            setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), greaterValue)
+        }
     }
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
@@ -187,19 +207,28 @@ open class Slider @JvmOverloads constructor(
             (h - paddingBottom).toFloat()
         )
         val thumbIsGreaterThanSliderWidth = thumbRadius + thumbStrokeWidth > sliderWidth / 2
-        val diffThumbAndSlider = thumbRadius + thumbStrokeWidth - sliderWidth/2
-
-        val left = thumbRadius + thumbStrokeWidth + paddingLeft
+        val diffThumbAndSlider = thumbRadius + thumbStrokeWidth - sliderWidth / 2
+        val left =
+            if (isVertical) paddingLeft + (if (thumbIsGreaterThanSliderWidth) diffThumbAndSlider else 0f)
+            else thumbRadius + thumbStrokeWidth + paddingLeft
         val top =
-            paddingTop + (if (thumbIsGreaterThanSliderWidth) diffThumbAndSlider else 0f)
-        val right = w - thumbRadius - paddingRight - thumbStrokeWidth
+            if (isVertical) paddingTop + thumbRadius + thumbStrokeWidth
+            else paddingTop + (if (thumbIsGreaterThanSliderWidth) diffThumbAndSlider else 0f)
+
+        val right =
+            if (isVertical) w - paddingRight - (if (thumbIsGreaterThanSliderWidth) diffThumbAndSlider else 0f)
+            else w - thumbRadius - paddingRight - thumbStrokeWidth
         val bottom =
-            h - paddingBottom - (if (thumbIsGreaterThanSliderWidth) diffThumbAndSlider else 0f)
+            if (isVertical) h - paddingBottom - thumbRadius - thumbStrokeWidth
+            else h - paddingBottom - (if (thumbIsGreaterThanSliderWidth) diffThumbAndSlider else 0f)
         val width = right - left
         val height = bottom - top
 
         panel.set(left, top, left + width, top + height)
-        yThumbPosition = h.div(2).toFloat()
+
+        halfPositionOfThumb =
+            if (isVertical) panel.left + panel.width() / 2
+            else panel.top + panel.height() / 2
         onPanelSizeChanged(panelPaint, panel)
     }
 
