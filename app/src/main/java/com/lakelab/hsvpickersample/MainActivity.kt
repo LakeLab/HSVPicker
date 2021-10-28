@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.card.MaterialCardView
-import com.lakelab.hsvpicker.ColorMediator
+import com.github.lakelab.hsvpicker.ColorMediator
 
 class MainActivity : AppCompatActivity(), ColorMediator.OnColorChangedListener {
 

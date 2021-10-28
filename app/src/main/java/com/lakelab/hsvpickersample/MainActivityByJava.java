@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.card.MaterialCardView;
-import com.lakelab.hsvpicker.ColorMediator;
+import com.github.lakelab.hsvpicker.ColorMediator;
 
 public class MainActivityByJava extends AppCompatActivity implements ColorMediator.OnColorChangedListener {
 

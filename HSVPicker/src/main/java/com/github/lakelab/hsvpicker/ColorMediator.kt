@@ -1,9 +1,7 @@
-package com.lakelab.hsvpicker
+package com.github.lakelab.hsvpicker
 
 import android.graphics.Color
 import androidx.annotation.ColorInt
-import androidx.annotation.FloatRange
-import androidx.annotation.IntRange
 
 class ColorMediator : SatValPanel.OnSatValChangedListener, HueSlider.OnHueChangedListener,
     AlphaSlider.OnAlphaChangedListener {

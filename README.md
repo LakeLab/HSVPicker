@@ -1,6 +1,6 @@
 # HSVPicker
 
- [ ![Download](https://api.bintray.com/packages/lakelab/android/HSVPicker/images/download.svg?version=0.1.6) ](https://bintray.com/lakelab/android/HSVPicker/0.1.6/link) [![Build Status](https://travis-ci.com/LakeLab/HSVPicker.svg?branch=master)](https://travis-ci.com/LakeLab/HSVPicker)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.lakelab/HSVPicker/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.lakelab/HSVPicker)
 
 HSVPicker is an easy and highly customizable HSV picker library for Android.
 
@@ -16,11 +16,11 @@ HSVPicker is an easy and highly customizable HSV picker library for Android.
 You can use Gradle :
 ```gradle
 repositories {
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
-   implementation 'com.lakelab:HSVPicker:0.1.6'
+   implementation 'com.github.lakelab:HSVPicker:1.0.0'
 }
 ```
 
@@ -30,7 +30,7 @@ Or Maven:
 <dependency>
   <groupId>com.lakelab</groupId>
   <artifactId>HSVPicker</artifactId>
-  <version>0.1.6</version>
+  <version>1.0.0</version>
   <type>pom</type>
 </dependency>
 ```
@@ -41,21 +41,21 @@ Or Maven:
 
 1. Arrange the pickers on your activity or fragment 
 ```xml
-    <com.lakelab.hsvpicker.AlphaSlider
+    <com.github.lakelab.hsvpicker.AlphaSlider
         android:id="@+id/alpha_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         />
 
-    <com.lakelab.hsvpicker.HueSlider
+    <com.github.lakelab.hsvpicker.HueSlider
         android:id="@+id/hue_slider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
         />
 
-    <com.lakelab.hsvpicker.SatValPanel
+    <com.github.lakelab.hsvpicker.SatValPanel
         android:id="@+id/sat_val_panel"
         android:layout_width="match_parent"
         android:layout_height="200dp"

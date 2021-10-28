@@ -1,8 +1,8 @@
-package com.lakelab.hsvpicker
+package com.github.lakelab.hsvpicker
 
 import androidx.annotation.IntDef
-import com.lakelab.hsvpicker.Orientation.Companion.HORIZONTAL
-import com.lakelab.hsvpicker.Orientation.Companion.VERTICAL
+import com.github.lakelab.hsvpicker.Orientation.Companion.HORIZONTAL
+import com.github.lakelab.hsvpicker.Orientation.Companion.VERTICAL
 
 @IntDef(HORIZONTAL, VERTICAL)
 annotation class Orientation {

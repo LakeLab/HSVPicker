@@ -1,4 +1,4 @@
-package com.lakelab.hsvpicker
+package com.github.lakelab.hsvpicker
 
 import androidx.annotation.FloatRange
 import androidx.annotation.IntRange

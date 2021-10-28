@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
-    <com.lakelab.hsvpicker.AlphaSlider
+    <com.github.lakelab.hsvpicker.AlphaSlider
         android:id="@+id/alpha_slider"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -32,7 +32,7 @@
         app:sliderOrientation="vertical"
         />
 
-    <com.lakelab.hsvpicker.HueSlider
+    <com.github.lakelab.hsvpicker.HueSlider
         android:id="@+id/hue_slider"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
         app:layout_constraintTop_toBottomOf="@id/sample_panel"
         />
 
-    <com.lakelab.hsvpicker.SatValPanel
+    <com.github.lakelab.hsvpicker.SatValPanel
         android:id="@+id/sat_val_panel"
         android:layout_width="0dp"
         android:layout_height="200dp"

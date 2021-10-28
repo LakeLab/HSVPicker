@@ -1,4 +1,4 @@
-package com.lakelab.hsvpicker
+package com.github.lakelab.hsvpicker
 
 import android.annotation.SuppressLint
 import android.content.Context
