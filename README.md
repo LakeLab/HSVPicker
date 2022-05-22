@@ -108,7 +108,10 @@ app:thumbStrokeWidth="3dp"
 <!-- Slider attribute -->
 app:sliderWidth="30dp"
 app:sliderOrientation = "horizontal"
+app:sliderCornerRadius = "2dp"
 
+<!-- Panel attribute -->
+app:panelCornerRadius = "2dp"
 ```
 
 #### For code
@@ -120,25 +123,36 @@ slider.thumbStrokeColor = Color.parseColor("#ffffff")
 slider.thumbStrokeWidth = 13f
 slider.sliderWidth = 30f
 slider.sliderOrientation = "horizontal"
+slider.sliderCornerRadius = 2f
+
+val panel : SatValPanel = findViewById(R.id.sat_val_panel)
+panel.panelCornerRadius = 2f
 ```
 
 #### Attributes
 
 ##### Common attributes
-  
+
 |  Attribute Name  | Description        |                    Default Value                     |
-| :--------------: | ------------------ | :--------------------------------------------------: |
+| :--------------: | :----------------: | :--------------------------------------------------: |
 |    thumbColor    | Thumb color        | null<br />(It will be changed to the selected color) |
 | thumbStrokeColor | Thumb stroke color |                       #ffffff                        |
 |   thumbRadius    | Thumb radius size  |                         15dp                         |
 | thumbStrokeWidth | Thumb stroke with  |                         2sp                          |
 
 ##### Slider attributes
-  
-|  Attribute Name   | Description           | Default Value |
-| :---------------: | --------------------- | :-----------: |
-|    sliderWidth    | Width of slider       |     30dp      |
-| sliderOrientation | Orientation of slider |  horizontal   |
+
+|     Attribute Name      | Description              | Default Value |
+| :--------------------:  | :----------------------: | :-----------: |
+|    sliderWidth          | Width of slider          |     30dp      |
+|    sliderOrientation    | Orientation of slider    |  horizontal   |
+|    sliderCornerRadius   | Radius of slider corners |     21dp      |
+
+##### Panel attributes
+
+|     Attribute Name      | Description             | Default Value |
+| :--------------------:  | :---------------------: | :-----------: |
+|    panelCornerRadius    | Radius of panel corners |     21dp      |
 
 ### Sample Usage
 

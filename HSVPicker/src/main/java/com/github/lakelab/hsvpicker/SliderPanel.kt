@@ -17,7 +17,6 @@ open class SliderPanel @JvmOverloads constructor(
 
     private val density = getContext().resources.displayMetrics.density
     private val fillMargin = 0.3f * density
-    private val circleCornerRadius = DEFAULT_CORNER_RADIUS_DP * density
 
     private val panelWithPadding = RectF()
     private val panel = RectF()
@@ -45,6 +44,16 @@ open class SliderPanel @JvmOverloads constructor(
     private val obtainStyledAttributes = attrs?.let { attributeSet ->
         context?.theme?.obtainStyledAttributes(attributeSet, R.styleable.SliderPanel, 0, 0)
     }
+
+    var panelCornerRadius =
+        obtainStyledAttributes?.getDimension(
+            R.styleable.SliderPanel_panelCornerRadius,
+            DEFAULT_CORNER_RADIUS_DP * density
+        ) ?: DEFAULT_CORNER_RADIUS_DP * density
+        set(value) {
+            field = value
+            invalidate()
+        }
 
     @ColorInt
     var thumbColor: Int? =
@@ -110,7 +119,7 @@ open class SliderPanel @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas) {
         if (panel.width() <= 0 || panel.height() <= 0) return
-        canvas.drawRoundRect(panel, circleCornerRadius, circleCornerRadius, panelPaint)
+        canvas.drawRoundRect(panel, panelCornerRadius, panelCornerRadius, panelPaint)
         val xThumbPosition = xValue * panel.width() + panel.left
         val yThumbPosition = (1f - yValue) * panel.height() + panel.top
         if (thumbStrokeWidth > 0) {

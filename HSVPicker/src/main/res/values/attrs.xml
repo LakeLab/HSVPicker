@@ -15,6 +15,7 @@
             <enum name="horizontal" value="0" />
             <enum name="vertical" value="1" />
         </attr>
+        <attr name="sliderCornerRadius" format="dimension" />
     </declare-styleable>
 
     <declare-styleable name="SliderPanel">
@@ -22,6 +23,7 @@
         <attr name="thumbStrokeColor" />
         <attr name="thumbRadius" />
         <attr name="thumbStrokeWidth" />
+        <attr name="panelCornerRadius" format="dimension" />
     </declare-styleable>
 
 
