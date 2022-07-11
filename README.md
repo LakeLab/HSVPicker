@@ -1,3 +1,6 @@
+# Moved
+This HSVPicker is moved to [naverz/Pinocchio](https://github.com/naverz/Pinocchio) repository.
+
 # HSVPicker
 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.lakelab/HSVPicker/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.lakelab/HSVPicker)
